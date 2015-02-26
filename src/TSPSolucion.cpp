@@ -76,4 +76,5 @@ TSPSolucion TSPSolucion::mutar(){
     int aux = recorrido[indice1];
     recorrido[indice1] = recorrido[indice2];
     recorrido[indice2] = aux;
+    return *this;
 }
