@@ -10,6 +10,8 @@ private:
 public:
     TSPSolucion(vector<vector<double>>* matriz);
 
+    TSPSolucion(vector<vector<double>>* matriz, vector<int> camino);
+
     TSPSolucion procrear(TSPSolucion const & otro)const;
 
     TSPSolucion mutar();

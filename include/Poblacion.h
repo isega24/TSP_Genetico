@@ -1,11 +1,13 @@
 #include <cstdlib>
 #include <cassert>
+#ifndef POBLACION
+#define POBLACION
 
 template <class individuo>
 
 /**
 * Para poder usar esta clase con un tipo de dato \e individuo, este debe poseer las funciones
-* procrear(individuo otro) y la funcion mutacion(void)
+* procrear(individuo otro) y la funcion muta(void)
 */
 
 class Poblacion{
@@ -31,7 +33,7 @@ private:
     * En esta estructura, se guardan las distintas poblaciones de individuos en
     * distintos momentos del tiempo.
     */
-    vector<vectos<individuos>> evolucion_individuos;
+    vector<vector<individuos>> evolucion_individuos;
 
     /**
     * Es la probabilidad de que dos individuos cualesquiera procreen.
@@ -67,4 +69,7 @@ public:
 
     void paso_del_tiempo();
 
+    vector<vector<individuo> getEvolucion(){return this->evolucion_individuos;}
 };
+#include "Poblacion.cpp"
+#endif
