@@ -1,7 +1,11 @@
 #include <cstdlib>
 #include <cassert>
+#include <vector>
+#include <limits.h>
+#include <cstdlib>
 #ifndef POBLACION
 #define POBLACION
+using namespace std;
 
 template <class individuo>
 
@@ -33,7 +37,7 @@ private:
     * En esta estructura, se guardan las distintas poblaciones de individuos en
     * distintos momentos del tiempo.
     */
-    vector<vector<individuos>> evolucion_individuos;
+    vector< vector<individuo> > evolucion_individuos;
 
     /**
     * Es la probabilidad de que dos individuos cualesquiera procreen.
@@ -56,20 +60,23 @@ private:
 
     double (*func)(individuo);
 
+    individuo get_individuo();
+
 public:
     Poblacion(vector<individuo> inicial,double prob_mutacion,double prob_procrear, double (*func)(individuo)){
-        assert(prob_mutacion >1 || prob_mutacion < 0 ||prob_procrear < 0 || prob_procrear > 1);
+        cout << "prob_mutacion:"<<prob_mutacion << " prob_procrear:"<< prob_procrear<<endl;
+        assert(prob_mutacion <1 && prob_mutacion > 0 && prob_procrear > 0 && prob_procrear < 1);
         evolucion_individuos.push_back(inicial);
         this->prob_procrear = prob_procrear;
         this->prob_mutacion = prob_mutacion;
         this->func = func;
     }
 
-    individuo get_individuo();
-
     void paso_del_tiempo();
 
-    vector<vector<individuo> getEvolucion(){return this->evolucion_individuos;}
+    vector<vector<individuo> > getEvolucion(){
+        return this->evolucion_individuos;
+    }
 };
 #include "Poblacion.cpp"
 #endif

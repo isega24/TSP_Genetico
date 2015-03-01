@@ -1,13 +1,13 @@
 #include "TSPSolucion.h"
 using namespace std;
 
-TSPSolucion::TSPSolucion(vector<vector<double>>* matriz){
+TSPSolucion::TSPSolucion(vector<vector<double> >* matriz){
     this->distancias = matriz;
     vector<int> ciudades;
     /**
     Primero generamos un vector con todas las ciudades, del 0 al tamaño de la matriz.
     */
-    for(int i = 0; i < (*matriz).size(); i++){
+    for(unsigned int i = 0; i < (*matriz).size(); i++){
         ciudades.push_back(i);
     }
     int ciudad;
@@ -16,13 +16,13 @@ TSPSolucion::TSPSolucion(vector<vector<double>>* matriz){
     Despues vamos extrallendo las ciudades de tal vector aleatoriamente para inicializarla.
     Además aprovechamos para calcular la distancia.
     */
-    for(int i = 0; i < (*matriz).size(); i++){
+    for(unsigned int i = 0; i < (*matriz).size(); i++){
         ciudad = rand()%ciudades.size();
         if(i != 0){
-            this->distancia+= (*distancias)[recorrido[recorrido.size()][ciudad]];
+            this->distancia+= (*distancias)[recorrido[recorrido.size()-1]][ciudad];
         }
         recorrido.push_back(ciudades[ciudad]);
-        ciudades.erase(find(ciudades[ciudad]))
+        ciudades.erase(find(ciudades.begin(),ciudades.end(),ciudades[ciudad]));
     }
     /*
     No hemos sumado las distancias de los extremos para no tener errores de segmentación.
@@ -31,29 +31,29 @@ TSPSolucion::TSPSolucion(vector<vector<double>>* matriz){
     this->distancia += (*distancias)[recorrido[0]][recorrido[1]] + (*distancias)[recorrido[0]][recorrido[recorrido.size()-1]];
     
 }
-TSPSolucion::TSPSolucion(vector<vector<double>>* matriz, vector<int> camino){
+TSPSolucion::TSPSolucion(vector<vector<double> >* matriz, vector<int> camino){
     distancias = matriz;
     this->recorrido = camino;
     distancia = 0;
-    for(int i = 0; i < recorrido.size(); i++){
-        distancia+=distancias[i][(i+1)%camino.size()];
+    for(unsigned int i = 0; i < recorrido.size(); i++){
+        distancia+=(*distancias)[i][(i+1)%camino.size()];
     }
 }
 
 TSPSolucion TSPSolucion::procrear(TSPSolucion const & otro)const{
-    int indice = rand()%this->(*distancias).size();
+    unsigned int indice = rand()%this->distancias->size();
     vector<int> hijo;
-    for(int i = 0; i < (*distancias).size(); i++){
+    for(unsigned int i = 0; i < (*distancias).size(); i++){
         hijo.push_back(-1);
     }
     
 
-    for ( int i = indice; i != (indice+hijo.size()/2)%hijo.size(); i = (i+1)%hijo.size()){
+    for ( unsigned int i = indice; i != (indice+hijo.size()/2)%hijo.size(); i = (i+1)%hijo.size()){
         hijo[i] = this->recorrido[i];
 
     }
     int j = 0;
-    for( int i = (indice+hijo.size()/2)%hijo.size(); i != indice; i = (i+1)%hijo.size()){
+    for( unsigned int i = (indice+hijo.size()/2)%hijo.size(); i != indice; i = (i+1)%hijo.size()){
         while(find(hijo.begin(),hijo.end(),otro.recorrido[j]) !=hijo.end()){
             j++;
         }

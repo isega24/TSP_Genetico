@@ -1,27 +1,29 @@
 #include <vector>
+#include <cstdlib>
+#include <algorithm>
+
 using namespace std;
+#ifndef TSPSOLUCION
+#define TSPSOLUCION
 class TSPSolucion{
 private:
     vector<int> recorrido;
-    vector<vector<double>>* distancias;
+    vector<vector<double> >* distancias;
     double distancia;
 
 
 public:
-    TSPSolucion(vector<vector<double>>* matriz);
+    TSPSolucion(){}
+    TSPSolucion(vector<vector<double> >* matriz);
 
-    TSPSolucion(vector<vector<double>>* matriz, vector<int> camino);
+    TSPSolucion(vector<vector<double> >* matriz, vector<int> camino);
 
     TSPSolucion procrear(TSPSolucion const & otro)const;
 
     TSPSolucion mutar();
 
-    double getDistancia(){return this->distancia;}const;
-};
-/**
-* Función a minimizar. Lo hacemos para poder generalizar la función a minimizar.
-* Así no necesitamos que la clase asuma la función a minimizar como suya, podríamos tomar
-* otra que nos inventemos, como inventarnos un peso para cada ciudad recorrida.
-*/
+    vector<int> getRecorrido(){return this->recorrido;}
 
-double distancia(TSPSolucion solucion){return solucion.getDistancia();};
+    double getDistancia()const{return this->distancia;};
+};
+#endif
