@@ -61,17 +61,16 @@ int main(int argc, char const *argv[]){
     }
     Poblacion<TSPSolucion> poblacion(primera_generacion,PROBMUTACION,PROBPROCREACION,&distancia);
 
+    vector<double> mejores;
+    vector<TSPSolucion > ultima;
+
     for(unsigned int i = 0; i < GENERACIONES; i++){
         poblacion.paso_del_tiempo();
-    }
-    vector<vector<TSPSolucion> > evolucion = poblacion.getEvolucion();
-    vector<double> mejores;
-
-    for(unsigned int i = 0; i < evolucion.size();i++){
-        mejores.push_back(evolucion[i][0].getDistancia());
-        for(unsigned int j = 0; j < evolucion[i].size();j++){
-            if(mejores[i] > evolucion[i][j].getDistancia()){
-                mejores[i] = evolucion[i][j].getDistancia();
+        ultima = poblacion.getEvolucion();
+        mejores.push_back(ultima[0].getDistancia());
+        for(unsigned int j = 0; j < ultima.size();j++){
+            if(mejores[i] > ultima[j].getDistancia()){
+                mejores[i] = ultima[j].getDistancia();
             }
         }
     }

@@ -37,7 +37,7 @@ private:
     * En esta estructura, se guardan las distintas poblaciones de individuos en
     * distintos momentos del tiempo.
     */
-    vector< vector<individuo> > evolucion_individuos;
+    vector< individuo > evolucion_individuos;
 
     /**
     * Es la probabilidad de que dos individuos cualesquiera procreen.
@@ -66,7 +66,7 @@ public:
     Poblacion(vector<individuo> inicial,double prob_mutacion,double prob_procrear, double (*func)(individuo)){
         cout << "prob_mutacion:"<<prob_mutacion << " prob_procrear:"<< prob_procrear<<endl;
         assert(prob_mutacion <1 && prob_mutacion > 0 && prob_procrear > 0 && prob_procrear < 1);
-        evolucion_individuos.push_back(inicial);
+        evolucion_individuos = inicial;
         this->prob_procrear = prob_procrear;
         this->prob_mutacion = prob_mutacion;
         this->func = func;
@@ -74,7 +74,7 @@ public:
 
     void paso_del_tiempo();
 
-    vector<vector<individuo> > getEvolucion(){
+    vector<individuo> getEvolucion(){
         return this->evolucion_individuos;
     }
 };

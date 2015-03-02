@@ -13,7 +13,7 @@ private:
 
 
 public:
-    TSPSolucion(){}
+    TSPSolucion();
     TSPSolucion(vector<vector<double> >* matriz);
 
     TSPSolucion(vector<vector<double> >* matriz, vector<int> camino);
@@ -25,5 +25,11 @@ public:
     vector<int> getRecorrido(){return this->recorrido;}
 
     double getDistancia()const{return this->distancia;};
+
+    TSPSolucion operator=(TSPSolucion const & otra){
+        this->distancia = otra.distancia;
+        this->recorrido = otra.recorrido;
+        this->distancias = otra.distancias;
+    }
 };
 #endif

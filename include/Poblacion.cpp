@@ -3,7 +3,7 @@ using namespace std;
 
 template<class individuo>
 individuo Poblacion<individuo>::get_individuo(){
-    return this->evolucion_individuos[evolucion_individuos.size()-1][rand()%evolucion_individuos.size()];
+    return this->evolucion_individuos[rand()%evolucion_individuos.size()];
 }
 
 template<class individuo>
@@ -26,37 +26,56 @@ void Poblacion<individuo>::paso_del_tiempo(){
         Ese elemento es el que metemos en la siguiente generacion.
 
     */
-        int i,j;
+    int i,j;
     vector<individuo> posibles_hijos;
     individuo hijo;
-    while(posibles_hijos.size() < evolucion_individuos[0].size()){
-        i = rand()%evolucion_individuos[0].size();
-        j = rand()%evolucion_individuos[0].size();
+    cout << "Aqui" <<endl;
+    while(posibles_hijos.size() < evolucion_individuos.size()){
+            cout << "Aqui dentro" <<endl;
+
+        i = rand()%evolucion_individuos.size();
+        j = rand()%evolucion_individuos.size();
+            cout << "Aqui dentro" <<endl;
+
         if(rand()*1.0/INT_MAX < prob_procrear){
-            hijo = evolucion_individuos[evolucion_individuos.size()-1][i].procrear(evolucion_individuos[evolucion_individuos.size()-1][j]);
+                cout << "Aqui en el if?" <<endl;
+
+            hijo = evolucion_individuos[i].procrear(evolucion_individuos[j]);
+            cout << "Aqui en el procrear?" <<endl;
             if(rand()*1.0/INT_MAX < prob_mutacion){
+                cout << "Aqui en el 2do if?" <<endl;
                 hijo.mutar();
             }
+            cout << "Aqui en el if por el pushback?" <<endl;
             posibles_hijos.push_back(hijo);
         }
     }
+        cout << "Aqui" <<endl;
+
     double total = 0;
-    for(int i = 0; i < evolucion_individuos[0].size(); i++){
+    for(int i = 0; i < evolucion_individuos.size(); i++){
         total += 1.0/func(posibles_hijos[i]);
     }
+        cout << "Aqui" <<endl;
+
     double prob_acumulada, random;
     vector<individuo> prox_generacion;
-    for( int i = 0; i < evolucion_individuos[0].size();i++){
+    for( int i = 0; i < evolucion_individuos.size();i++){
         prob_acumulada = 0;
         j = 0;
-        random = rand()%int(total);
+        random = (rand()*1.0/INT_MAX)*total;
+        cout << "Aqui en el for?" <<endl;
         while(prob_acumulada < random){
             prob_acumulada += 1.0/func(posibles_hijos[j]);
             j++;
         }
+        cout << "Aqui en pushback" <<endl;
         prox_generacion.push_back(posibles_hijos[j]);
+        cout << "Aqui en pushback no llega?" <<endl;
 
     }
-    this->evolucion_individuos.push_back(prox_generacion);
+        cout << "Aqui" <<endl;
+
+    this->evolucion_individuos=prox_generacion;
 
 }

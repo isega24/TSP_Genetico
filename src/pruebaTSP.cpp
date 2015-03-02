@@ -90,31 +90,6 @@ int main(int argc, char const *argv[]){
         cout << recorrido[i]<< ",";
     }
     cout << endl;
-
-    cout << "Ahora provemos Poblacion:" << endl;
-    vector<TSPSolucion> primera_generacion;
-    for( int i = 0; i < NUM_INDIVIDUOS;i++){
-        primera_generacion.push_back(TSPSolucion(&distancias));
-    }
-    Poblacion<TSPSolucion> poblacion(primera_generacion,PROBMUTACION,PROBPROCREACION,&distancia);
-
-    for(unsigned int i = 0; i < GENERACIONES; i++){
-        poblacion.paso_del_tiempo();
-    }
-    vector<vector<TSPSolucion> > evolucion = poblacion.getEvolucion();
-    vector<double> mejores;
-
-    for(unsigned int i = 0; i < evolucion.size();i++){
-        mejores.push_back(evolucion[i][0].getDistancia());
-        for(unsigned int j = 0; j < evolucion[i].size();j++){
-            if(mejores[i] > evolucion[i][j].getDistancia()){
-                mejores[i] = evolucion[i][j].getDistancia();
-            }
-        }
-    }
-    for(unsigned int i = 0; i < mejores.size(); i++){
-        cout << "Generacion " << i << ", mejor distancia:"<<mejores[i]<<endl;
-    }
     
 
     

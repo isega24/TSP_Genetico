@@ -1,6 +1,11 @@
 #include "TSPSolucion.h"
 using namespace std;
 
+TSPSolucion::TSPSolucion(){
+    this->distancia = 0;
+    this->distancias = NULL;
+}
+
 TSPSolucion::TSPSolucion(vector<vector<double> >* matriz){
     this->distancias = matriz;
     vector<int> ciudades;
@@ -19,7 +24,7 @@ TSPSolucion::TSPSolucion(vector<vector<double> >* matriz){
     for(unsigned int i = 0; i < (*matriz).size(); i++){
         ciudad = rand()%ciudades.size();
         if(i != 0){
-            this->distancia+= (*distancias)[recorrido[recorrido.size()-1]][ciudad];
+            this->distancia+= (*distancias)[recorrido[recorrido.size()-1]][ciudades[ciudad]];
         }
         recorrido.push_back(ciudades[ciudad]);
         ciudades.erase(find(ciudades.begin(),ciudades.end(),ciudades[ciudad]));
@@ -36,7 +41,7 @@ TSPSolucion::TSPSolucion(vector<vector<double> >* matriz, vector<int> camino){
     this->recorrido = camino;
     distancia = 0;
     for(unsigned int i = 0; i < recorrido.size(); i++){
-        distancia+=(*distancias)[i][(i+1)%camino.size()];
+        distancia+=(*distancias)[camino[i]][camino[(i+1)%camino.size()]];
     }
 }
 
@@ -65,16 +70,25 @@ TSPSolucion TSPSolucion::procrear(TSPSolucion const & otro)const{
 TSPSolucion TSPSolucion::mutar(){
     int indice1 = rand()%(*distancias).size();
     int indice2 = rand()%(*distancias).size();
+    /*
+
     distancia -=(*distancias)[(indice1-1+(*distancias).size())%(*distancias).size()][indice1];
     distancia -=(*distancias)[(indice1+1)%(*distancias).size()][indice1];
     distancia -=(*distancias)[(indice2-1+(*distancias).size())%(*distancias).size()][indice2];
     distancia -=(*distancias)[(indice2+1)%(*distancias).size()][indice2];
     distancia +=(*distancias)[(indice2-1+(*distancias).size())%(*distancias).size()][indice1];
-    distancia -=(*distancias)[(indice2+1)%(*distancias).size()][indice1];
-    distancia -=(*distancias)[(indice1-1+(*distancias).size())%(*distancias).size()][indice2];
-    distancia -=(*distancias)[(indice1+1)%(*distancias).size()][indice2];
+    distancia +=(*distancias)[(indice2+1)%(*distancias).size()][indice1];
+    distancia +=(*distancias)[(indice1-1+(*distancias).size())%(*distancias).size()][indice2];
+    distancia +=(*distancias)[(indice1+1)%(*distancias).size()][indice2];
+
+    */
+
     int aux = recorrido[indice1];
     recorrido[indice1] = recorrido[indice2];
     recorrido[indice2] = aux;
+    distancia = 0;
+    for(unsigned int i = 0; i < recorrido.size(); i++){
+        distancia+=(*distancias)[recorrido[i]][recorrido[(i+1)%recorrido.size()]];
+    }
     return *this;
 }

@@ -21,7 +21,6 @@ $(BIN)/pruebaTSP:$(OBJ)/pruebaTSP.o $(OBJ)/TSPSolucion.o
 $(OBJECTS): $(OBJ)/%.o: $(SRC)/%.cpp
 	$(CC) $(CPPFLAGS) -o $@ -c $< 2> salida
 
-
 # ************ Limpieza ************
 clean:
 	-rm $(OBJ)/* $(SRC)/*~ $(INC)/*~ ./*~
