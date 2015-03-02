@@ -8,8 +8,10 @@ DOC = ./doc
 SOURCES := $(wildcard $(SRC)/*.cpp)
 OBJECTS := $(SOURCES:$(SRC)/%.cpp=$(OBJ)/%.o)
 
-all:$(BIN)/main $(BIN)/pruebaTSP
+all:necesario $(BIN)/main $(BIN)/pruebaTSP
 
+necesario:
+	mkdir $(OBJ) $(BIN)
 
 
 $(BIN)/main:$(OBJ)/main.o $(OBJ)/TSPSolucion.o
